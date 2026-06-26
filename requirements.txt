@@ -1,0 +1,15 @@
+streamlit
+langgraph
+langchain
+langchain-community
+langchain-chroma
+chromadb
+sentence-transformers
+pandas
+numpy
+langchain-ollama
+torchvision
+weasyprint
+pypdf
+pdfminer.six
+confluent-kafka
