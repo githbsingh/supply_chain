@@ -1,4 +1,4 @@
-from turtle import st
+from streamlit import st
 
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
