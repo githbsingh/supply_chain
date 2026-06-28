@@ -55,8 +55,8 @@ try:
 
         print("Sent:", event)
 
-        # Generate one event every 2 seconds
-        time.sleep(2)
+        # Generate one event every 30 seconds
+        time.sleep(30)
 
 except KeyboardInterrupt:
     print("Stopped producer")

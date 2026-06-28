@@ -79,9 +79,9 @@ def recommendation_agent(state):
         response = llm.invoke(prompt)
 
         print("SUCCESS")
-        #print(response.content)
-
-        state["recommendations"] = response.content
+        if response is not None and hasattr(response, "content"):
+            state["recommendations"] = response.content
+            print("LLM Response:", response.content)
 
     except Exception as e:
         print("LLM ERROR:", str(e))
@@ -95,8 +95,6 @@ def recommendation_agent(state):
     )
     state["trace"] = trace
 
-    if response is not None and hasattr(response, "content"):
-        state["recommendations"] = response.content
-        #print("LLM Response:", response.content)
+    
 
     return state
