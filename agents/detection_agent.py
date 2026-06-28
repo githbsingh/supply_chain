@@ -2,19 +2,29 @@ def detection_agent(state):
 
     event = state["event"]
     
-    delay_days = event.get(
-        "delay_days",
+    risk_type = event.get(
+        "risk_type",
         0
     )
+    print("risk_type:", risk_type)
 
-    if delay_days > 5:
+    if risk_type == 'CRITICAL_DELAY':
 
         state["disruption"] = {
             "issue": "Supplier Delay"
         }
+    elif risk_type == 'OUT_OF_STOCK_RISK':
+
+        state["disruption"] = {
+            "issue": "Material Out of Stock"
+        }
+    elif risk_type == 'DELAYED_SHIPMENT':
+
+        state["disruption"] = {
+            "issue": "Delayed Shipment"
+        }
 
     else:
-
         state["disruption"] = {
             "issue": "No Risk"
         }

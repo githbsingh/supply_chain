@@ -7,7 +7,8 @@ conf = {
     'sasl.username': 'GSXQ54WCVVMLEPYK',
     'sasl.password': 'cflt0HFZqfAXw8mLTjMbVShtbbLtwGt/SxZTXFEiyEKqQOKQwsH/FyL4tB/f1cYA',
     'group.id': 'supply-chain-group',
-    'auto.offset.reset': 'earliest'
+    'enable.auto.commit': False,
+    'auto.offset.reset': 'latest'
 }
 
 consumer = Consumer(conf)
@@ -37,6 +38,14 @@ def get_latest_risk():
         json_bytes = value[json_start:]
 
         risk = json.loads(json_bytes.decode('utf-8'))
+
+        print(f"Topic: {msg.topic()}")
+        print(f"Partition: {msg.partition()}")
+        print(f"Offset: {msg.offset()}")
+
+        consumer.commit(message=msg, asynchronous=False)
+
+        print("Offset committed")
 
         #print("🚨 RISK ALERT")
         #print(risk)

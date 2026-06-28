@@ -1,21 +1,12 @@
 import logging
 import os
 
-os.makedirs(
-    "logs",
-    exist_ok=True
-)
-LOG_FILE = "logs/app.log"
-# Delete old log file
-if os.path.exists(LOG_FILE):
-    os.remove(LOG_FILE)
+os.makedirs("logs", exist_ok=True)
 
 logging.basicConfig(
-    filename=LOG_FILE,
+    filename="logs/app.log",
     level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
+    filemode="w"   # overwrite every run
 )
 
-logger = logging.getLogger(
-    "SupplyChainAI"
-)
+logger = logging.getLogger(__name__)

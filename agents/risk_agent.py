@@ -3,12 +3,12 @@ def risk_agent(state):
 
     event = state["event"]
 
-    delay_days = event.get(
-        "delay_days",
+    risk_score = event.get(
+        "risk_score",
         0
     )
     logger.info(f"risk_agent started")
-    logger.info(f"delay_days: {delay_days}")
+    logger.info(f"risk_score: {risk_score}")
 
     inventory_days = event.get(
         "inventory_days",
@@ -17,28 +17,28 @@ def risk_agent(state):
     logger.info(f"inventory_days: {inventory_days}")
     score = 0
 
-    score += delay_days * 10
+    #score += delay_days * 10
 
     if inventory_days < 2:
 
         score += 30
     logger.info(f"risk_score: {score}")
-    if score > 100:
+    if risk_score > 100:
         score = 100
 
     severity = "Low"
 
-    if score > 90:
+    if risk_score > 90:
         severity = "Critical"
 
-    elif score > 70:
+    elif risk_score > 70:
         severity = "High"
 
-    elif score > 40:
+    elif risk_score > 40:
         severity = "Medium"
 
     state["risk"] = {
-        "risk_score": score,
+        "risk_score": risk_score,
         "severity": severity
     }
 
