@@ -8,6 +8,8 @@ from streamlit_autorefresh import st_autorefresh
 from graph.workflow import graph
 from kafka_utils.consumer import get_latest_risk
 import time
+from dotenv import load_dotenv
+load_dotenv()
 
 # ----------------------------------------------------
 # Streamlit Configuration
