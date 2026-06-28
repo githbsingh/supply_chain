@@ -197,38 +197,62 @@ st.subheader("✅ Recommendations")
 
 try:
 
-    recommendations = alert["recommendations"]
+    recommendations = alert.get("recommendations", "")
 
+    # Handle both string and dict responses
     if isinstance(recommendations, str):
-        recommendations = json.loads(recommendations)
 
-    st.markdown("### Applied Rules")
+        # Remove markdown code fences if present
+        recommendations = recommendations.strip()
 
-    for rule in recommendations["applied_rules"]:
+        if recommendations.startswith("```json"):
+            recommendations = recommendations.replace("```json", "", 1)
+
+        if recommendations.endswith("```"):
+            recommendations = recommendations[:-3]
+
+        recommendations = recommendations.strip()
+
+        # Extract only JSON object
+        start = recommendations.find("{")
+        end = recommendations.rfind("}") + 1
+
+        if start == -1 or end == 0:
+            raise ValueError("No valid JSON found in recommendations.")
+
+        recommendations = json.loads(
+            recommendations[start:end]
+        )
+
+    # recommendations is now a Python dict
+
+    st.markdown("### 📋 Applied Rules")
+
+    for rule in recommendations.get("applied_rules", []):
         st.info(rule)
 
-    st.markdown("### Suggested Actions")
+    st.markdown("### ✅ Suggested Actions")
 
     for i, rec in enumerate(
-        recommendations["recommendations"],
+        recommendations.get("recommendations", []),
         start=1
     ):
 
-        with st.expander(f"Recommendation {i}"):
+        with st.container(border=True):
 
-            st.markdown(
-                f"**Action**\n\n{rec['action']}"
-            )
+            st.markdown(f"### Recommendation {i}")
 
-            st.markdown(
-                f"**Reason**\n\n{rec['reason']}"
-            )
+            st.success(f"**Action:** {rec.get('action', 'N/A')}")
+
+            st.write(f"**Reason:** {rec.get('reason', 'N/A')}")
 
 except Exception as e:
 
-    st.warning("Unable to parse recommendations.")
+    st.error("Unable to parse recommendations.")
 
-    st.code(str(alert["recommendations"]))
+    st.code(str(e))
+
+    st.code(alert.get("recommendations", ""))
 
 
 # ----------------------------------------------------

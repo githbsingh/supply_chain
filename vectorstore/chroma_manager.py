@@ -1,5 +1,8 @@
+import os
+
 from langchain_chroma import Chroma
-from langchain_ollama import OllamaEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+#from langchain_ollama import OllamaEmbeddings
 
 
 class ChromaManager:
@@ -7,8 +10,9 @@ class ChromaManager:
     def __init__(self):
 
         self.embeddings = (
-            OllamaEmbeddings(
-                model="nomic-embed-text"
+            GoogleGenerativeAIEmbeddings(
+                model="gemini-embedding-2-preview",
+                google_api_key=os.getenv("GOOGLE_API_KEY")#os.environ["GOOGLE_API_KEY"]
             )
         )
         print(
@@ -32,9 +36,9 @@ class ChromaManager:
 
         return db
 
-    def load_vector_store(self):
+    # def load_vector_store(self):
 
-        return Chroma(
-            persist_directory="chroma_db",
-            embedding_function=self.embeddings
-        )
+    #     return Chroma(
+    #         persist_directory="chroma_db",
+    #         embedding_function=self.embeddings
+    #     )

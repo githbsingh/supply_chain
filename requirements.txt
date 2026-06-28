@@ -14,3 +14,5 @@ pypdf
 pdfminer.six
 confluent-kafka
 streamlit-autorefresh
+langchain-google-genai
+google-generativeai

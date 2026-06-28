@@ -1,12 +1,15 @@
 from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
+import os
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from utils.logger import logger
 
 
 def retrieve_context(query):
 
-    embeddings = OllamaEmbeddings(
-        model="nomic-embed-text"
+    embeddings = GoogleGenerativeAIEmbeddings(
+        model="gemini-embedding-2-preview",
+        google_api_key=os.getenv("GOOGLE_API_KEY")#os.environ["GOOGLE_API_KEY"]
     )
 
     db = Chroma(
