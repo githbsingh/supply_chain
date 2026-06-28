@@ -104,9 +104,9 @@ refresh = st.sidebar.slider(
     300,
     5
 )
-
+#Refresh the app every 60 seconds
 st_autorefresh(
-    interval=60 * 1000,
+    interval=300 * 1000,
     key="refresh"
 )
 
